@@ -26,7 +26,10 @@ urlpatterns = [
     path('', v1.landing, name='landing'),
     path('home/', v1.home, name='home'),
     path('student/', v1.student, name='student'),
-    path('attendacne/', v2.attendance, name='attendance'),
+
+    path('student/student-registration/', v1.stu_reg , name='stu_reg'),
+
+    path('attendance/', v2.attendance, name='attendance'),  
     path('course/', v3.course, name='course'),
     path('marks/', v4.marks, name='marks'),
 ]

@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="{% static 'css/stu_reg.css' %}" />
+  </head>
+  <body>
+    <center>
+      <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'student' %}">Students</a>
+        <a href="{% url 'course' %}">Course</a>
+        <a href="{% url 'marks' %}">Marks</a>
+        <a href="{% url 'attendance' %}">Attendance</a>
+      </nav>
+      <h1>Register New Student</h1>
+      <form action="{% url 'student' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Registration Form</legend>
+          <div id="fo_gr">
+            <div class="col1"><label for="sname"> Surname : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="surname"
+                id="sname"
+                placeholder="please enter surname"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="lname"> Lastname : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="lastname"
+                id="lname"
+                placeholder="please enter lastname"
+                required
+              />
+            </div>
+
+            <div class="col1">
+              <label for="gname"> Guardian’s/Father’s Name : </label>
+            </div>
+            <div class="col2">
+              <input
+                type="text"
+                name="guardname"
+                id="gname"
+                placeholder="please enter Name"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="mname"> Mother’s Name : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="mothername"
+                id="mname"
+                placeholder="please enter Name"
+              />
+            </div>
+
+            <div class="col1"><label for="cno"> Contact number : </label></div>
+            <div class="col2">
+              <input
+                type="number"
+                name="cno"
+                id="cno"
+                placeholder="please enter Phone numner"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="email"> Email : </label></div>
+            <div class="col2">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="please enter email"
+                required
+              />
+            </div>
+
+            <div class="col1">
+              <label for="addr"> Residential Address : </label>
+            </div>
+            <div class="col2">
+              <input
+                type="text"
+                name="address"
+                id="addr"
+                placeholder="please enter address"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="cls"> Class : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="class"
+                id="cls"
+                placeholder="please enter the Class"
+                required
+              />
+            </div>
+          </div>
+          <div id="but">
+            <input type="submit" value="Submit" />
+            <input type="reset" value="Clear" />
+          </div>
+        </fieldset>
+      </form>
+    </center>
+  </body>
+</html>
