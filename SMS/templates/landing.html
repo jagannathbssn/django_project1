@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}" />
+  </head>
+  <body>
+    <center>
+      <h1>Login</h1>
+      <p>please login to continue</p>
+      <form method="post" action="{% url 'landing' %}">
+        {% csrf_token %}
+        <label for="uname">Username : </label>
+        <input type="text" id="uname" name="uname" required />
+        <br />
+        <label for="password">Password : </label>
+        <input type="password" id="password" name="password" required />
+        <br />
+        <input type="submit" />
+      </form>
+    </center>
+  </body>
+</html>

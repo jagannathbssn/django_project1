@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="{% static 'css/student.css' %}" />
+  </head>
+  <body>
+    <center>
+      <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'student' %}">Students</a>
+        <a href="{% url 'course' %}">Course</a>
+        <a href="{% url 'marks' %}">Marks</a>
+        <a href="{% url 'attendance' %}">Attendance</a>
+      </nav>
+      <h2>Student Services</h2>
+      <b
+    </center>
+  </body>
+</html>
