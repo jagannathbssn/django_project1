@@ -12,6 +12,12 @@ class student(models.Model):
     slname = models.CharField(max_length=200, null=False)
     gfname = models.CharField(max_length=200, null=False)
     mname = models.CharField(max_length=200)
+    dob = models.DateField(null=False)
+    GENDER_DETAILS = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+    ]
+    gender = models.CharField(max_length=10, choices=GENDER_DETAILS, null=False)
     ph_no = models.BigIntegerField(unique=True, null=False)
     email = models.EmailField(unique=True, null=False)
     addr = models.CharField(max_length=400, null=False)

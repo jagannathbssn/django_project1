@@ -22,19 +22,24 @@ nav a:hover {
   border-radius: 5px;
 }
 
+#grid {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
 form {
   width: 800px;
   font-size: 25px;
 }
 
-legend {
-  font-size: 28px;
+#fo_gr1 {
+  display: grid;
+  grid-template-columns: 350px 200px;
 }
 
-#fo_gr {
+#fo_gr2 {
   display: grid;
   grid-template-columns: 400px auto;
-  padding: 5px;
 }
 
 .col1 {
@@ -65,10 +70,12 @@ input[type="radio"] {
   transform: scale(1.5);
 }
 
-#but input {
-  background-color: azure;
-  font-size: 19px;
-  margin: 10px;
-  border-radius: 1px solid black;
-  border-radius: 5px;
+legend {
+  margin-left: 0px;
+  font-size: 25px;
+}
+
+#l2 {
+  margin-left: 0px;
+  font-size: 25px;
 }

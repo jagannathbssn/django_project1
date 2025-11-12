@@ -29,7 +29,9 @@ def stu_reg(request):
         surname = request.POST.get('surname')
         lname = request.POST.get('lastname')
         gname = request.POST.get('guardname')
-        mname = request.POST.gmet('mothername')
+        mname = request.POST.get('mothername')
+        date = request.POST.get('dob')
+        gender = request.POST.get('gender')
         cno = request.POST.get('cno')
         email = request.POST.get('email')
         addr = request.POST.get('address')
@@ -38,17 +40,39 @@ def stu_reg(request):
         roll_no = Stu.objects.filter(cls_name = cls).count()
         roll_no += 1
 
-        Stu.objects.create(
+        try:
+            Stu.objects.create(
             ssname = surname,
             slname = lname,
             gfname = gname,
             mname = mname,
+            dob = date,
+            gender = gender,
             ph_no = cno,
             email = email,
             addr = addr,
             cls_name = cls,
             roll = roll_no
-        )
-        redirect('student')
+            )
+            msg = "You operation is sucessful"
+        except:
+            msg = "Your operation is unsucessful"
+        return render(request, 'message.html', {'data' : {'msg' : msg}})
     else:
         return render(request, 'stu_reg.html')
+    
+def stu_up(request):
+    if request.method == 'POST':
+        classname = request.POST.get('cls')
+        rollno = request.POST.get('roll')
+        try:
+            person = Stu.objects.get(cls_name = classname, roll = rollno)
+            return render(request, 'update.html', {"data" : person})
+        except:
+            msg = "Please, check the details again"
+            return render(request, 'message.html', {'data': {'msg' : msg}})
+    res = Stu.objects.values('cls_name').order_by('cls_name').distinct
+    return render(request, 'stu_up.html', {'data' : res})
+
+def updating(request):
+    return render(request, 'home.html')

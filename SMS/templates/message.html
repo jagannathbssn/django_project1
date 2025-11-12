@@ -6,8 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management System</title>
-    <link rel="stylesheet" href="{% static 'css/student.css' %}" />
-    <script src="{% static 'js/student.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
   </head>
   <body>
     <center>
@@ -18,13 +17,7 @@
         <a href="{% url 'marks' %}">Marks</a>
         <a href="{% url 'attendance' %}">Attendance</a>
       </nav>
-      <h1>Student Services</h1>
-      <div id="options">
-        <button onclick="reg()">Register New Student</button><br />
-        <button onclick="up()">Update Student Details</button><br />
-        <button>Delete Student Details</button><br />
-        <button>view Student Profile</button><br />
-      </div>
+      <h1>{{data.msg}}</h1>
     </center>
   </body>
 </html>

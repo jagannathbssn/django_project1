@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management System</title>
-    <link rel="stylesheet" href="{% static 'css/stu_reg.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/stu_update.css' %}" />
   </head>
   <body>
     <center>
@@ -17,19 +17,19 @@
         <a href="{% url 'marks' %}">Marks</a>
         <a href="{% url 'attendance' %}">Attendance</a>
       </nav>
-      <h1>Register New Student</h1>
-      <form action="{% url 'stu_reg' %}" method="post">
-        {% csrf_token %}
+      <h1>Updating Student Details</h1>
+      <div id="grid">
         <fieldset>
-          <legend>Registration Form</legend>
-          <div id="fo_gr">
+          <legend id="l1">Student Details</legend>
+          <div id="fo_gr1">
             <div class="col1"><label for="sname"> Surname : </label></div>
             <div class="col2">
               <input
                 type="text"
                 name="surname"
                 id="sname"
-                placeholder="please enter surname"
+                value="{{data.ssname}}"
+                readonly
                 required
               />
             </div>
@@ -40,7 +40,136 @@
                 type="text"
                 name="lastname"
                 id="lname"
+                value="{{data.slname}}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1">
+              <label for="gname"> Guardian’s/Father’s Name : </label>
+            </div>
+            <div class="col2">
+              <input
+                type="text"
+                name="guardname"
+                id="gname"
+                value="{{data.gfname}}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="mname"> Mother’s Name : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="mothername"
+                id="mname"
+                value="{{data.mname}}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="dob"> Date-of-Birth : </label></div>
+            <div class="col2">
+              <input
+                type="date"
+                name="dob"
+                id="dob"
+                value="{{   data.dob|date:'Y-m-d' }}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1"><label> Gender : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="gender"
+                id="gen"
+                value="{% if data.gender == 'M' %}Male{% else %}Female{% endif %}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="cno"> Contact number : </label></div>
+            <div class="col2">
+              <input
+                type="number"
+                name="cno"
+                id="cno"
+                value="{{data.ph_no}}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="email"> Email : </label></div>
+            <div class="col2">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value="{{data.email}}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1">
+              <label for="addr"> Residential Address : </label>
+            </div>
+            <div class="col2">
+              <input
+                type="text"
+                name="address"
+                id="addr"
+                value="{{data.addr}}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="cls"> Class : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="class"
+                id="cls"
+                value="{{data.cls_name}}"
+                readonly
+                required
+              />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend id="l2">Update Here</legend>
+          <div id="fo_gr2">
+            <div class="col1"><label for="sname1"> Surname : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="surname1"
+                id="sname1"
+                placeholder="please enter surname"
+                value="{{data.ssname}}"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="lname1"> Lastname : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="lastname1"
+                id="lname1"
                 placeholder="please enter lastname"
+                value="{{data.slname}}"
                 required
               />
             </div>
@@ -144,12 +273,8 @@
               />
             </div>
           </div>
-          <div id="but">
-            <input type="submit" value="Submit" />
-            <input type="reset" value="Clear" />
-          </div>
         </fieldset>
-      </form>
+      </div>
     </center>
   </body>
 </html>
