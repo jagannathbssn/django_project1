@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from student.models import Cred
 from student.models import student as Stu
+from student.models import del_user as Del
 
 # Create your views here.
 def landing(request):
@@ -137,3 +138,51 @@ def stu_up(request):
     else:
         res = Stu.objects.values('cls_name').order_by('cls_name').distinct
         return render(request, 'stu_up.html', {'data' : res})
+    
+def stu_del(request):
+    if request.method == 'POST':
+        if request.POST.get('roll'):
+            classname = request.POST.get('cls')
+            roll = request.POST.get('roll')
+            
+            try:
+                obj = Stu.objects.get(cls_name = classname, roll = roll)
+                return render(request, 'deleting.html', {'data' : obj})
+            except:
+                data = {
+                    "msg1" : "please check the details",
+                    "msg2" : "please click the button to return to previous page",
+                    "modu" : "student"
+                }
+                return render(request, 'message.html', data)
+        else:
+            sid = request.POST.get('sid')
+            
+            try:
+                obj = Stu.objects.get(id = sid)
+            
+                sname = obj.ssname + obj.slname
+                scno = obj.ph_no
+            
+                Del.objects.create(sid = sid, name = sname, ph_no = scno)
+                obj.delete()
+
+                data = {
+                    "msg1" : "the data is sucessfully deleted",
+                    "msg2" : "please click the button to return to previous page",
+                    "modu" : "student"
+                }
+            except:
+                data = {
+                    "msg1" : "operations is unsucessfully please try again",
+                    "msg2" : "please click the button to return to previous page",
+                    "modu" : "student"
+                }
+
+                return render(request, 'message.html', data)
+
+            return render(request, 'message.html', data)
+        
+    else:
+        res = Stu.objects.values('cls_name').order_by('cls_name').distinct
+        return render(request, 'stu_del.html', {'data' : res})

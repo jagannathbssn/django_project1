@@ -1,0 +1,161 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="{% static 'css/stu_delete.css' %}" />
+  </head>
+  <body>
+    <center>
+      <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'student' %}">Students</a>
+        <a href="{% url 'course' %}">Course</a>
+        <a href="{% url 'marks' %}">Marks</a>
+        <a href="{% url 'attendance' %}">Attendance</a>
+      </nav>
+      <h1 id="ab1">Deleting Student</h1>
+      <form id="del" action="{% url 'stu_del' %}" method="post">
+        {% csrf_token %}
+        <input type="number" name="sid" value="{{data.id}}" hidden />
+        <fieldset>
+          <legend>Student Details</legend>
+          <div id="fo_gr">
+            <div class="col1"><label for="sname"> Surname : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="surname"
+                id="sname"
+                value="{{data.ssname}}"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="lname"> Lastname : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="lastname"
+                id="lname"
+                value="{{data.slname}}"
+                required
+              />
+            </div>
+
+            <div class="col1">
+              <label for="gname"> Guardian’s/Father’s Name : </label>
+            </div>
+            <div class="col2">
+              <input
+                type="text"
+                name="guardname"
+                id="gname"
+                value="{{data.gfname}}"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="mname"> Mother’s Name : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="mothername"
+                id="mname"
+                value="{{data.mname}}"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="dob"> Date-of-Birth : </label></div>
+            <div class="col2">
+              <input
+                type="date"
+                name="dob"
+                id="dob"
+                value="{{data.dob|date:'Y-m-d'}}"
+                required
+              />
+            </div>
+
+            <div class="col1"><label> Gender : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                value="{% if data.gender == 'M' %}Male{% elif data.gender == 'F' %}Female{% endif %}"
+                readonly
+              />
+            </div>
+
+            <div class="col1"><label for="cno"> Contact number : </label></div>
+            <div class="col2">
+              <input
+                type="number"
+                name="cno"
+                id="cno"
+                value="{{data.ph_no}}"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="email"> Email : </label></div>
+            <div class="col2">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value="{{data.email}}"
+                required
+              />
+            </div>
+
+            <div class="col1">
+              <label for="addr"> Residential Address : </label>
+            </div>
+            <div class="col2">
+              <input
+                type="text"
+                name="address"
+                id="addr"
+                value="{{data.addr}}"
+                required
+              />
+            </div>
+
+            <div class="col1"><label for="cls"> Class : </label></div>
+            <div class="col2">
+              <input
+                type="text"
+                name="class"
+                id="cls"
+                value="{{data.cls_name}}"
+                required
+              />
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <input
+        onmouseover="a()"
+        onmouseleave="b()"
+        id="sub"
+        type="submit"
+        form="del"
+        value="Delete"
+      />
+    </center>
+    <script>
+      function a() {
+        document.getElementById("ab1").innerText +=
+          ", {{data.ssname}} {{data.slname}}`s data will be deleted permanently!";
+      }
+      function b() {
+        document.getElementById("ab1").innerText = "Deleting Student";
+      }
+    </script>
+  </body>
+</html>

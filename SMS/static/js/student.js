@@ -14,3 +14,8 @@ function cls_sel() {
   console.log(opt);
   inp.value = opt.value;
 }
+
+function del() {
+  const url = "/student/deleting-student-details";
+  window.location.href = url;
+}

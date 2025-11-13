@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('student/student-registration/', v1.stu_reg , name='stu_reg'),
     path('student/updating-student-details/', v1.stu_up , name='stu_up'),
+    path('student/deleting-student-details/', v1.stu_del , name='stu_del'),
 
     path('attendance/', v2.attendance, name='attendance'),  
     path('course/', v3.course, name='course'),
