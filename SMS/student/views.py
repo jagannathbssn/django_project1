@@ -54,25 +54,86 @@ def stu_reg(request):
             cls_name = cls,
             roll = roll_no
             )
-            msg = "You operation is sucessful"
+            msg = "Student Registration is sucessful"
+    
         except:
-            msg = "Your operation is unsucessful"
-        return render(request, 'message.html', {'data' : {'msg' : msg}})
+            msg = "Student Registration is unsucessful"
+        
+        data = {
+                "msg1" : msg,
+                "msg2" : "Please click the below button to go to previous page",
+                "modu" : "student"
+            }
+        return render(request, 'message.html', data)
     else:
         return render(request, 'stu_reg.html')
     
 def stu_up(request):
     if request.method == 'POST':
-        classname = request.POST.get('cls')
-        rollno = request.POST.get('roll')
-        try:
-            person = Stu.objects.get(cls_name = classname, roll = rollno)
-            return render(request, 'update.html', {"data" : person})
-        except:
-            msg = "Please, check the details again"
-            return render(request, 'message.html', {'data': {'msg' : msg}})
-    res = Stu.objects.values('cls_name').order_by('cls_name').distinct
-    return render(request, 'stu_up.html', {'data' : res})
+        if request.POST.get('roll'):
+            classname = request.POST.get('cls')
+            rollno = request.POST.get('roll')
+            try:
+                person = Stu.objects.get(cls_name = classname, roll = rollno)
+                return render(request, 'update.html', {"data" : person})
+            except:
+                data = {
+                "msg1" : "Please, check the details again",
+                "msg2" : "Please click the below button to go to previous page",
+                "modu" : "student"
+                }
+                return render(request, 'message.html', data)
+        else:
+            a1 = request.POST.get('surname1')
+            a2 = request.POST.get('lastname1')
+            a3 = request.POST.get('guardname1')
+            a4 = request.POST.get('mothername1')
+            a5 = request.POST.get('dob1')
+            a6 = request.POST.get('gender')
+            a7 = request.POST.get('cno1')
+            a8 = request.POST.get('email1')
+            a9 = request.POST.get('address1')
+            a10 = request.POST.get('class1')
+            a11 = request.POST.get('scn')
+            a12 = request.POST.get('sid')
 
-def updating(request):
-    return render(request, 'home.html')
+            try:
+                res = Stu.objects.get(id = a12)
+
+                res.ssname = a1
+                res.slname = a2
+                res.gfname = a3
+                res.mname = a4
+                res.dob = a5
+                res.gender = a6
+                res.ph_no = a7
+                res.email = a8
+                res.addr = a9
+
+                if a10 == a11:
+                    res.save()
+                else:
+                    count = Stu.objects.filter(cls_name = a10).count()
+                    res.roll = count + 1
+                    res.cls_name = a10
+                    res.save()
+                
+                data = {
+                    "msg1" : "The update operation is sucessful",
+                    "msg2" : "Please click the below button to go to previous page",
+                    "modu" : "student"
+                }
+
+                
+            except:
+                data = {
+                    "msg1" : "The update operation is unsucessful, please check the detalis",
+                    "msg2" : "Please click the below button to go to previous page",
+                    "modu" : "student"
+                }
+
+            return render(request, 'message.html', data)
+
+    else:
+        res = Stu.objects.values('cls_name').order_by('cls_name').distinct
+        return render(request, 'stu_up.html', {'data' : res})

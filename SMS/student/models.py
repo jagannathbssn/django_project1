@@ -18,8 +18,14 @@ class student(models.Model):
         ('F', 'Female'),
     ]
     gender = models.CharField(max_length=10, choices=GENDER_DETAILS, null=False)
-    ph_no = models.BigIntegerField(unique=True, null=False)
-    email = models.EmailField(unique=True, null=False)
+    ph_no = models.BigIntegerField(null=False)
+    email = models.EmailField(null=False)
     addr = models.CharField(max_length=400, null=False)
     cls_name = models.CharField(max_length=100, null=True)
     roll = models.IntegerField(null=False)
+
+class del_user(models.Model):
+    id = models.AutoField(primary_key=True)
+    sid = models.IntegerField(null=False)
+    name = models.CharField(max_length=200, null=False)
+    ph_no = models.BigIntegerField(null=False)

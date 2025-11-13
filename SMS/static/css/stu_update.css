@@ -27,11 +27,6 @@ nav a:hover {
   grid-template-columns: auto auto;
 }
 
-form {
-  width: 800px;
-  font-size: 25px;
-}
-
 #fo_gr1 {
   display: grid;
   grid-template-columns: 350px 200px;
@@ -78,4 +73,13 @@ legend {
 #l2 {
   margin-left: 0px;
   font-size: 25px;
+}
+
+form {
+}
+
+#sub {
+  margin: 20px;
+  font-size: 20px;
+  background-color: azure;
 }

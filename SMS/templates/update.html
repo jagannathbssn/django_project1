@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +7,7 @@
     <title>Student Management System</title>
     <link rel="stylesheet" href="{% static 'css/stu_update.css' %}" />
   </head>
+
   <body>
     <center>
       <nav>
@@ -84,12 +84,12 @@
               />
             </div>
 
-            <div class="col1"><label> Gender : </label></div>
+            <div class="col1"><label for="g1"> Gender : </label></div>
             <div class="col2">
               <input
                 type="text"
-                name="gender"
-                id="gen"
+                id="g1"
+                name="gndr"
                 value="{% if data.gender == 'M' %}Male{% else %}Female{% endif %}"
                 readonly
                 required
@@ -147,134 +147,163 @@
             </div>
           </div>
         </fieldset>
+
         <fieldset>
           <legend id="l2">Update Here</legend>
-          <div id="fo_gr2">
-            <div class="col1"><label for="sname1"> Surname : </label></div>
-            <div class="col2">
-              <input
-                type="text"
-                name="surname1"
-                id="sname1"
-                placeholder="please enter surname"
-                value="{{data.ssname}}"
-                required
-              />
-            </div>
+          <form id="form1" action="{% url 'stu_up' %}" method="post">
+            {% csrf_token %}
+            <div id="fo_gr2">
+              <div class="col1"><label for="sname1"> Surname : </label></div>
+              <div class="col2">
+                <input
+                  type="text"
+                  name="surname1"
+                  id="sname1"
+                  placeholder="please enter surname"
+                  value="{{data.ssname}}"
+                  required
+                />
+              </div>
 
-            <div class="col1"><label for="lname1"> Lastname : </label></div>
-            <div class="col2">
-              <input
-                type="text"
-                name="lastname1"
-                id="lname1"
-                placeholder="please enter lastname"
-                value="{{data.slname}}"
-                required
-              />
-            </div>
+              <div class="col1"><label for="lname1"> Lastname : </label></div>
+              <div class="col2">
+                <input
+                  type="text"
+                  name="lastname1"
+                  id="lname1"
+                  placeholder="please enter lastname"
+                  value="{{data.slname}}"
+                  required
+                />
+              </div>
 
-            <div class="col1">
-              <label for="gname"> Guardian’s/Father’s Name : </label>
-            </div>
-            <div class="col2">
-              <input
-                type="text"
-                name="guardname"
-                id="gname"
-                placeholder="please enter Name"
-                required
-              />
-            </div>
+              <div class="col1">
+                <label for="gname1"> Guardian’s/Father’s Name : </label>
+              </div>
+              <div class="col2">
+                <input
+                  type="text"
+                  name="guardname1"
+                  id="gname1"
+                  placeholder="please enter Name"
+                  value="{{data.gfname}}"
+                  required
+                />
+              </div>
 
-            <div class="col1"><label for="mname"> Mother’s Name : </label></div>
-            <div class="col2">
-              <input
-                type="text"
-                name="mothername"
-                id="mname"
-                placeholder="please enter Name"
-                required
-              />
-            </div>
+              <div class="col1">
+                <label for="mname1"> Mother’s Name : </label>
+              </div>
+              <div class="col2">
+                <input
+                  type="text"
+                  name="mothername1"
+                  id="mname1"
+                  placeholder="please enter Name"
+                  value="{{data.mname}}"
+                  required
+                />
+              </div>
 
-            <div class="col1"><label for="dob"> Date-of-Birth : </label></div>
-            <div class="col2">
-              <input
-                type="date"
-                name="dob"
-                id="dob"
-                placeholder="please Enter DOB"
-                required
-              />
-            </div>
+              <div class="col1">
+                <label for="dob1"> Date-of-Birth : </label>
+              </div>
+              <div class="col2">
+                <input
+                  type="date"
+                  name="dob1"
+                  id="dob1"
+                  placeholder="please Enter DOB"
+                  value="{{data.dob|date:'Y-m-d'}}"
+                  required
+                />
+              </div>
 
-            <div class="col1"><label> Gender : </label></div>
-            <div class="col2">
-              <input
-                type="radio"
-                name="gender"
-                id="gen"
-                value="M"
-                required
-              />Male
-              <input
-                type="radio"
-                name="gender"
-                id="gen"
-                value="F"
-                required
-              />Female
-            </div>
+              <div class="col1"><label> Gender : </label></div>
+              <div class="col2">
+                <input
+                  type="radio"
+                  name="gender"
+                  id="gen1"
+                  value="M"
+                  required
+                />Male
+                <input
+                  type="radio"
+                  name="gender"
+                  id="gen2"
+                  value="F"
+                  required
+                />Female
+              </div>
 
-            <div class="col1"><label for="cno"> Contact number : </label></div>
-            <div class="col2">
-              <input
-                type="number"
-                name="cno"
-                id="cno"
-                placeholder="please enter Phone numner"
-                required
-              />
-            </div>
+              <div class="col1">
+                <label for="cno1"> Contact number : </label>
+              </div>
+              <div class="col2">
+                <input
+                  type="number"
+                  name="cno1"
+                  id="cno1"
+                  placeholder="please enter Phone numner"
+                  value="{{data.ph_no}}"
+                  required
+                />
+              </div>
 
-            <div class="col1"><label for="email"> Email : </label></div>
-            <div class="col2">
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="please enter email"
-                required
-              />
-            </div>
+              <div class="col1"><label for="email1"> Email : </label></div>
+              <div class="col2">
+                <input
+                  type="email"
+                  name="email1"
+                  id="email1"
+                  placeholder="please enter email"
+                  value="{{data.email}}"
+                  required
+                />
+              </div>
 
-            <div class="col1">
-              <label for="addr"> Residential Address : </label>
-            </div>
-            <div class="col2">
-              <input
-                type="text"
-                name="address"
-                id="addr"
-                placeholder="please enter address"
-                required
-              />
-            </div>
+              <div class="col1">
+                <label for="addr1"> Residential Address : </label>
+              </div>
+              <div class="col2">
+                <input
+                  type="text"
+                  name="address1"
+                  id="addr1"
+                  placeholder="please enter address"
+                  value="{{data.addr}}"
+                  required
+                />
+              </div>
 
-            <div class="col1"><label for="cls"> Class : </label></div>
-            <div class="col2">
-              <input
-                type="text"
-                name="class"
-                id="cls"
-                placeholder="please enter the Class"
-                required
-              />
+              <div class="col1"><label for="cls1"> Class : </label></div>
+              <div class="col2">
+                <input
+                  type="text"
+                  name="class1"
+                  id="cls1"
+                  placeholder="please enter the Class"
+                  value="{{data.cls_name}}"
+                  required
+                />
+              </div>
+              <input type="hidden" name="sid" value="{{data.id}}" />
+              <input type="hidden" name="scn" value="{{data.cls_name}}" />
             </div>
-          </div>
+          </form>
         </fieldset>
       </div>
+      <input id="sub" type="submit" form="form1" value="Update" />
     </center>
+
+    <script>
+      let a = "{{data.gender}}";
+      if (a === "M") {
+        document.getElementById("gen1").checked = true;
+      } else if (a === "F") {
+        document.getElementById("gen2").checked = true;
+      }
+    </script>
   </body>
 </html>
