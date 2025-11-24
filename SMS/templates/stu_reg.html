@@ -6,148 +6,249 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management System</title>
-    <link rel="stylesheet" href="{% static 'css/stu_reg.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\stu_reg.css' %}" />
+    <style>
+      body{
+        background-color: black;
+        color: white;
+      }
+    </style>
   </head>
   <body>
     <center>
       <nav>
         <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'student' %}">Students</a>
+        <a href="{% url 'student' %}">Student</a>
         <a href="{% url 'course' %}">Course</a>
         <a href="{% url 'marks' %}">Marks</a>
         <a href="{% url 'attendance' %}">Attendance</a>
       </nav>
-      <h1>Register New Student</h1>
-      <form action="{% url 'stu_reg' %}" method="post">
+      <h1>Student Registration</h1>
+      <form action="{% url 'stu_reg' %}" method="post"  enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset>
           <legend>Registration Form</legend>
-          <div id="fo_gr">
-            <div class="col1"><label for="sname"> Surname : </label></div>
+          <div id="grid">
+            <div class="col1"><label for="sname">Surname : </label></div>
             <div class="col2">
               <input
                 type="text"
-                name="surname"
                 id="sname"
-                placeholder="please enter surname"
+                name="ssname"
+                placeholder="Please enter first name"
                 required
               />
             </div>
 
-            <div class="col1"><label for="lname"> Lastname : </label></div>
+            <div class="col1"><label for="mname">Middle Name : </label></div>
             <div class="col2">
               <input
                 type="text"
-                name="lastname"
+                id="mname"
+                name="smname"
+                placeholder="Please enter middle name"
+              />
+            </div>
+
+            <div class="col1"><label for="lname">Last Name : </label></div>
+            <div class="col2">
+              <input
+                type="text"
                 id="lname"
-                placeholder="please enter lastname"
+                name="slname"
+                placeholder="Please enter first name"
                 required
               />
             </div>
 
             <div class="col1">
-              <label for="gname"> Guardian’s/Father’s Name : </label>
+              <label for="fgname">Father’s / Guardian’s Name : </label>
             </div>
             <div class="col2">
               <input
                 type="text"
-                name="guardname"
-                id="gname"
-                placeholder="please enter Name"
+                id="fgname"
+                name="fgname"
+                placeholder="Please enter father’s/guardian’s name"
                 required
               />
             </div>
 
-            <div class="col1"><label for="mname"> Mother’s Name : </label></div>
+            <div class="col1">
+              <label for="mname">Mother’s Name : </label>
+            </div>
             <div class="col2">
               <input
                 type="text"
-                name="mothername"
                 id="mname"
-                placeholder="please enter Name"
-                required
+                name="mname"
+                placeholder="Please enter mother’s name"
               />
-            </div>
+          </div>
 
-            <div class="col1"><label for="dob"> Date-of-Birth : </label></div>
+          <div class="col1">
+              <label for="dob">Date of Birth : </label>
+            </div>
             <div class="col2">
               <input
                 type="date"
-                name="dob"
                 id="dob"
-                placeholder="please Enter DOB"
+                name="dob"
+                placeholder="Please enter student location"
                 required
               />
-            </div>
+          </div>
 
-            <div class="col1"><label> Gender : </label></div>
-            <div class="col2">
-              <input
-                type="radio"
-                name="gender"
-                id="gen"
-                value="M"
-                required
-              />Male
-              <input
-                type="radio"
-                name="gender"
-                id="gen"
-                value="F"
-                required
-              />Female
-            </div>
+          <div class="col1">
+            <label for="gender">Gender : </label>
+          </div>
+          <div class="col2">
+              <input 
+              type="radio" 
+              name="gender" 
+              id="gender" 
+              value="Male">Male
+              <input 
+              type="radio" 
+              name="gender" 
+              id="gender" 
+              value="Female">Female
+          </div>
 
-            <div class="col1"><label for="cno"> Contact number : </label></div>
+          <div class="col1">
+              <label for="gpno">Guardian’s Contact Number : </label>
+            </div>
             <div class="col2">
               <input
                 type="number"
-                name="cno"
-                id="cno"
-                placeholder="please enter Phone numner"
+                id="gpno"
+                name="gpno"
+                placeholder="Please enter phone number"
                 required
               />
-            </div>
+          </div>
 
-            <div class="col1"><label for="email"> Email : </label></div>
+          <div class="col1">
+              <label for="pno">Student Contact Number : </label>
+            </div>
+            <div class="col2">
+              <input
+                type="number"
+                id="pno"
+                name="cno"
+                placeholder="Please enter phone number"
+                required
+              />
+          </div>
+
+          <div class="col1">
+              <label for="email">Student Email : </label>
+            </div>
             <div class="col2">
               <input
                 type="email"
-                name="email"
                 id="email"
-                placeholder="please enter email"
+                name="email"
+                placeholder="Please enter email address"
                 required
               />
-            </div>
+          </div>
 
-            <div class="col1">
-              <label for="addr"> Residential Address : </label>
+          <div class="col1">
+              <label for="loca">Location : </label>
             </div>
             <div class="col2">
               <input
                 type="text"
-                name="address"
-                id="addr"
-                placeholder="please enter address"
+                id="loca"
+                name="loca"
+                placeholder="Please enter student location"
                 required
               />
-            </div>
+          </div>
 
-            <div class="col1"><label for="cls"> Class : </label></div>
+          <div class="col1">
+              <label for="adr">Address : </label>
+            </div>
+            <div class="col2">
+              <textarea 
+                cols="30" 
+                rows="10" 
+                id="adr"
+                name="addr"
+                placeholder="Please enter email address"
+                required></textarea>
+          </div>
+
+          <div class="col1">
+              <label for="prog">Academic Program  : </label>
+            </div>
+            <div class="col2">
+              <select
+                type="text"
+                id="prog"
+                name="prog"
+                required
+                >
+                <option value="">Select Academic Program</option>
+                {% for i in data %}
+                <option value="{{i.pname}}">{{i.pname}}</option>
+                {% endfor %}
+                </select>
+          </div>
+
+          <div class="col1">
+              <label for="dur">Year : </label>
+            </div>
+            <div class="col2">
+              <select name="dura" id="dur" required>
+                <option value="">Select Year</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+          </div>
+
+          <div class="col1">
+              <label for="sem">Semister : </label>
+            </div>
+            <div class="col2">
+              <select name="sem" id="sem" required>
+                <option value="">Select Semester</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </select>
+          </div>
+
+          <div class="col1">
+              <label for="class">Classs : </label>
+            </div>
             <div class="col2">
               <input
                 type="text"
-                name="class"
-                id="cls"
-                placeholder="please enter the Class"
+                id="class"
+                name="cls"
+                placeholder="Please enter student class"
                 required
               />
-            </div>
           </div>
-          <div id="but">
-            <input type="submit" value="Submit" />
-            <input type="reset" value="Clear" />
+          
+          <div class="col1">
+            <label for="photo">Student Photo :</label>
           </div>
+          <div class="col2">
+            <input      
+              type="file"
+              id="photo"
+              name="photo"
+              accept="image/*"
+              required
+            />
+          </div>    
+          <input type="submit" value="Submit">
+          <input type="reset" value="Clear">
         </fieldset>
       </form>
     </center>

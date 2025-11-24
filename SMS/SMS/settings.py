@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6t09q7nsudsar^q#q@%#h&+!*(s=1do8*c8^l)s@m#!2lta=dl'
+SECRET_KEY = 'django-insecure-@ac&s(qd!!=bej5&te&=9z+=^#-zjy&_vutp3)p@fzo(%=(!=='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'student',
     'course',
-    'marks',
     'attendance',
+    'marks',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'SMS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':  'SMS',
+        'NAME': 'project',
         'USER': 'root',
         'PASSWORD': '1234abcd',
     }

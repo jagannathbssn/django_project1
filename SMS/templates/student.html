@@ -8,6 +8,12 @@
     <title>Student Management System</title>
     <link rel="stylesheet" href="{% static 'css/student.css' %}" />
     <script src="{% static 'js/student.js' %}"></script>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+    </style>
   </head>
   <body>
     <center>
@@ -20,10 +26,11 @@
       </nav>
       <h1>Student Services</h1>
       <div id="options">
-        <button onclick="reg()">Register New Student</button><br />
-        <button onclick="up()">Update Student Details</button><br />
-        <button onclick="del()">Delete Student Details</button><br />
-        <button>view Student Profile</button><br />
+        <button class="but" onclick="reg()">Register New Student</button><br />
+        <button class="but" onclick="up()">Update Student Details</button><br />
+        <button class="but" onclick="del()">Delete Student Details</button
+        ><br />
+        <button class="but" onclick="pro()">view Student Profile</button><br />
       </div>
     </center>
   </body>

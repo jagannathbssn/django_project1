@@ -7,7 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management System</title>
     <link rel="stylesheet" href="{% static 'css/stu_del.css' %}" />
-    <script src="{% static 'js/student.js' %}"></script>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+    </style>
   </head>
   <body>
     <center>
@@ -18,40 +23,8 @@
         <a href="{% url 'marks' %}">Marks</a>
         <a href="{% url 'attendance' %}">Attendance</a>
       </nav>
-      <h1>Deleting Student Details</h1>
-      <div id="grid">
-        <div id="se_cls">
-          <label for="cls">Select Class : </label>
-          <select name="cls" id="cls" onchange="cls_sel()">
-            <option value=""></option>
-            {% for c in data %}
-            <option value="{{c.cls_name}}">{{c.cls_name}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div id="fo">
-          <form action="{% url 'stu_del' %}" method="post">
-            {% csrf_token %}
-            <input
-              type="text"
-              name="cls"
-              id="clsname"
-              placeholder="Class name"
-              hidden
-              required
-            />
-            <label for="Roll">Roll Number :</label>
-            <input
-              type="number"
-              name="roll"
-              id="Roll"
-              placeholder="Roll"
-              required
-            />
-            <input type="submit" value="Get" />
-          </form>
-        </div>
-      </div>
+      <h1>Welcome,</h1>
+      <h2>to Student Management System</h2>
     </center>
   </body>
 </html>

@@ -1,24 +1,26 @@
 from django.shortcuts import render, redirect
 from student.models import Cred
-from student.models import student as Stu
-from student.models import del_user as Del
+from student.models import Student as Stu
+from course.models import Prog
+from datetime import date as d
 
 # Create your views here.
 def landing(request):
     if request.method == 'POST':
         user = request.POST.get('uname')
-        password = request.POST.get('password')
+        pas = request.POST.get('password')
+        try:
+            res = Cred.objects.get(uname = user, password = pas)
+            if res:
+                return redirect('home')
+        except:
+            msg = "please check the credentials"
+            return render(request, 'landing.html', {"msg" : msg})
+    return render(request, 'landing.html')
 
-        res = Cred.objects.filter(
-            uname = user,
-            password = password).exists()
-        if res:
-            return redirect('home')
-        else:
-            return render(request, 'landing.html')
-    else:
-        return render(request, 'landing.html')
-    
+def message(request):
+    return render(request, 'message.html')
+
 def home(request):
     return render(request, 'home.html')
 
@@ -26,163 +28,200 @@ def student(request):
     return render(request, 'student.html')
 
 def stu_reg(request):
-    if request.method == "POST":
-        surname = request.POST.get('surname')
-        lname = request.POST.get('lastname')
-        gname = request.POST.get('guardname')
-        mname = request.POST.get('mothername')
-        date = request.POST.get('dob')
-        gender = request.POST.get('gender')
+
+    if request.method == 'POST':
+        sur = request.POST.get('ssname')
+        mid = request.POST.get('smname')
+        last = request.POST.get('slname')
+        gfname = request.POST.get('fgname')
+        mname = request.POST.get('mname')
+        dob = request.POST.get('dob')
+        gend = request.POST.get('gender')
+        gpno = request.POST.get('gpno')
         cno = request.POST.get('cno')
         email = request.POST.get('email')
-        addr = request.POST.get('address')
-        cls = request.POST.get('class')
-        
-        roll_no = Stu.objects.filter(cls_name = cls).count()
-        roll_no += 1
+        loc = request.POST.get('loca')
+        addr = request.POST.get('addr')
+        prog = request.POST.get('prog')
+        dur = request.POST.get('dura')
+        sem = request.POST.get('sem')
+        cls_name = request.POST.get('cls')
+        photo = request.FILES.get('photo')
+
+        te = d.today()
+        jdate = te
 
         try:
+
+            roll = Stu.objects.filter(year = dur, cls_name = cls_name).count()
+            roll += 101
+
+            tp = Prog.objects.get(pname = prog)
+            tc = Stu.objects.filter(prog = prog, year = dur).count()
+            tc += 10001
+
+
+            s = f"{d.today().year+int(dur)-1}{(tp.pid + 100)}{hex(tc)[2:]}"
+
             Stu.objects.create(
-            ssname = surname,
-            slname = lname,
-            gfname = gname,
-            mname = mname,
-            dob = date,
-            gender = gender,
-            ph_no = cno,
-            email = email,
-            addr = addr,
-            cls_name = cls,
-            roll = roll_no
+                sfname = sur,
+                smname = mid,
+                slname = last,
+                gfname = gfname,
+                mname = mname,
+                dob = dob,
+                gend = gend,
+                gc_no = gpno,
+                ph_no = cno,
+                email = email,
+                location = loc,
+                addr = addr,
+                prog = prog,
+                year = dur,
+                sem = sem,
+                cls_name = cls_name,
+                roll = roll,
+                sid = s,
+                joining_date = jdate,
+                photo = photo,
             )
-            msg = "Student Registration is sucessful"
-    
-        except:
-            msg = "Student Registration is unsucessful"
-        
-        data = {
-                "msg1" : msg,
-                "msg2" : "Please click the below button to go to previous page",
-                "modu" : "student"
+
+            data = {
+                "msg1" : "Student registration is sucessful",
+                "val" : 1,
+                "msg2" : "Please click the button below to return to the previous page.",
+                "modu" : "stu_reg"
             }
+        except Exception as e:
+            data = {
+
+                "msg1" : "Student registration is Unsucessful, Please check the details",
+                "val" : 0,
+                "msg2" : "Please click the button below to return to the previous page.",
+                "modu" : "stu_reg",
+                "err" : e
+            }
+        
         return render(request, 'message.html', data)
     else:
-        return render(request, 'stu_reg.html')
+        res = Prog.objects.values('pname')
+        return render(request, "stu_reg.html", {"data" : res})
     
 def stu_up(request):
-    if request.method == 'POST':
-        if request.POST.get('roll'):
-            classname = request.POST.get('cls')
-            rollno = request.POST.get('roll')
-            try:
-                person = Stu.objects.get(cls_name = classname, roll = rollno)
-                return render(request, 'update.html', {"data" : person})
-            except:
-                data = {
-                "msg1" : "Please, check the details again",
-                "msg2" : "Please click the below button to go to previous page",
-                "modu" : "student"
-                }
-                return render(request, 'message.html', data)
-        else:
-            a1 = request.POST.get('surname1')
-            a2 = request.POST.get('lastname1')
-            a3 = request.POST.get('guardname1')
-            a4 = request.POST.get('mothername1')
-            a5 = request.POST.get('dob1')
-            a6 = request.POST.get('gender')
-            a7 = request.POST.get('cno1')
-            a8 = request.POST.get('email1')
-            a9 = request.POST.get('address1')
-            a10 = request.POST.get('class1')
-            a11 = request.POST.get('scn')
-            a12 = request.POST.get('sid')
+    prog_names = Prog.objects.values("pname")
+    class_names = Stu.objects.values("cls_name").distinct()
+    data = {
+        "prog_name" : prog_names,
+        "class_name" : class_names
+    }
+    if request.method == "POST":
+
+        if request.POST.get('ssname'):
+            ssname = request.POST.get('ssname')
+            smname = request.POST.get('smname')
+            slname = request.POST.get('slname')
+            fgname = request.POST.get('fgname')
+            nmname = request.POST.get('nmname')
+            dob = request.POST.get('dob')
+            gen = request.POST.get('gender')
+            gpno = request.POST.get('gpno')
+            cno = request.POST.get('cno')
+            email = request.POST.get('email')
+            loca = request.POST.get('loca')
+            addr = request.POST.get('addr')
+            prog = request.POST.get('prog')
+            dura = request.POST.get('dura')
+            sem = request.POST.get('sem')
+            cls = request.POST.get('cls')
+            status = request.POST.get('status')
+
+            sid1 = request.POST.get('student_id')
+            photo = request.FILES.get('photo')
 
             try:
-                res = Stu.objects.get(id = a12)
-
-                res.ssname = a1
-                res.slname = a2
-                res.gfname = a3
-                res.mname = a4
-                res.dob = a5
-                res.gender = a6
-                res.ph_no = a7
-                res.email = a8
-                res.addr = a9
-
-                if a10 == a11:
-                    res.save()
-                else:
-                    count = Stu.objects.filter(cls_name = a10).count()
-                    res.roll = count + 1
-                    res.cls_name = a10
-                    res.save()
+                res = Stu.objects.get(sid = sid1)
+                res.sfname = ssname
+                res.smname = smname
+                res.slname = slname
+                res.gfname = fgname
+                res.mname = nmname
+                res.dob = dob
+                res.gend = gen
+                res.gc_no = gpno
+                res.ph_no = cno
+                res.email = email
+                res.location = loca
+                res.addr = addr
                 
-                data = {
-                    "msg1" : "The update operation is sucessful",
-                    "msg2" : "Please click the below button to go to previous page",
-                    "modu" : "student"
-                }
+                
+                if cls != res.cls_name or prog != res.prog or dura != res.year or sem != res.sem:
+                    te = Stu.objects.filter(prog = prog, year = dura, sem = sem, cls_name = cls).count()
+                    te += 1
+                    res.roll = te
+
+                res.prog = prog
+                res.year = dura
+                res.sem = sem
+                res.cls_name = cls
+
+                if status == "Relieved":
+                    res.relieving_date = d.today()
+
+                res.status = status
 
                 
-            except:
-                data = {
-                    "msg1" : "The update operation is unsucessful, please check the detalis",
-                    "msg2" : "Please click the below button to go to previous page",
-                    "modu" : "student"
-                }
+                if photo:
+                    res.photo.delete(save=False)
+                    res.photo = photo
 
+                res.save()
+
+                data["msg1"] = "Updating student details is sucessful"
+                data["val"] = 1
+                data["msg2"] = "Please click the button below to return to the previous page."
+                data["modu"] = "stu_up"
+
+            except Exception as e:
+                    data["msg1"] = "Updating student details is not sucessful, Please check the details"
+                    data["val" ] = 0
+                    data["msg2"] = "Please click the button below to return to the previous page."
+                    data["modu"] = "stu_up"
+                    data["err" ] = e  
             return render(request, 'message.html', data)
-
+            
+        else:
+            try:
+                if request.POST.get('sid'):
+                    sid = request.POST.get('sid')
+                    sobj = Stu.objects.get(sid = sid)
+                    data["sobj"] = sobj
+                elif request.POST.get('seid'):
+                    em = request.POST.get('seid')
+                    sobj = Stu.objects.get(email = em)
+                    data["sobj"] = sobj
+                elif request.POST.get('spro'):
+                    pro = request.POST.get('spro')
+                    year = request.POST.get('syear')
+                    ssem = request.POST.get('ssem')
+                    scls = request.POST.get('scls')
+                    rol = request.POST.get('sroll')
+                    sobj = Stu.objects.get(
+                        prog = pro,
+                        year = year,
+                        sem = ssem,
+                        cls_name = scls,
+                        roll = rol)
+                    data["sobj"] = sobj
+            except Exception as e:
+                data["msg1"] = "Updating student details is not sucessful, Please check the details"
+                data["val" ] = 0
+                data["msg2"] = "Please click the button below to return to the previous page."
+                data["modu"] = "stu_up"
+                data["err" ] = e
+                return render(request, "message.html", data)
+        return render(request, "stu_up.html", data)
     else:
-        res = Stu.objects.values('cls_name').order_by('cls_name').distinct
-        return render(request, 'stu_up.html', {'data' : res})
+        return render(request, "stu_up.html", data)
     
 def stu_del(request):
-    if request.method == 'POST':
-        if request.POST.get('roll'):
-            classname = request.POST.get('cls')
-            roll = request.POST.get('roll')
-            
-            try:
-                obj = Stu.objects.get(cls_name = classname, roll = roll)
-                return render(request, 'deleting.html', {'data' : obj})
-            except:
-                data = {
-                    "msg1" : "please check the details",
-                    "msg2" : "please click the button to return to previous page",
-                    "modu" : "student"
-                }
-                return render(request, 'message.html', data)
-        else:
-            sid = request.POST.get('sid')
-            
-            try:
-                obj = Stu.objects.get(id = sid)
-            
-                sname = obj.ssname + obj.slname
-                scno = obj.ph_no
-            
-                Del.objects.create(sid = sid, name = sname, ph_no = scno)
-                obj.delete()
-
-                data = {
-                    "msg1" : "the data is sucessfully deleted",
-                    "msg2" : "please click the button to return to previous page",
-                    "modu" : "student"
-                }
-            except:
-                data = {
-                    "msg1" : "operations is unsucessfully please try again",
-                    "msg2" : "please click the button to return to previous page",
-                    "modu" : "student"
-                }
-
-                return render(request, 'message.html', data)
-
-            return render(request, 'message.html', data)
-        
-    else:
-        res = Stu.objects.values('cls_name').order_by('cls_name').distinct
-        return render(request, 'stu_del.html', {'data' : res})
+    return render(request, 'stu_del.html')

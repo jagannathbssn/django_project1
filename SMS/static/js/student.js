@@ -1,21 +1,19 @@
 function reg() {
-  const url = "/student/student-registration/";
+  const url = "/student/student-resgistration/";
   window.location.href = url;
 }
 
 function up() {
-  const url = "/student/updating-student-details";
+  const url = "/student/student-updation/";
   window.location.href = url;
 }
 
-function cls_sel() {
-  const opt = document.getElementById("cls");
-  const inp = document.getElementById("clsname");
-  console.log(opt);
-  inp.value = opt.value;
+function del() {
+  const url = "/student/student-deletion/";
+  window.location.href = url;
 }
 
-function del() {
-  const url = "/student/deleting-student-details";
+function pro() {
+  const url = "/student/student-profile/";
   window.location.href = url;
 }

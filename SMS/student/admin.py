@@ -1,7 +1,7 @@
 from django.contrib import admin
-from student.models import Cred, student, del_user
+from student.models import Cred
+from student.models import Student as Stu
 
 # Register your models here.
 admin.site.register(Cred)
-admin.site.register(student)
-admin.site.register(del_user)
+admin.site.register(Stu)

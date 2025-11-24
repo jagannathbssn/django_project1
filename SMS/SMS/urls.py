@@ -17,21 +17,36 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from student import views as v1
-from attendance import views as v2
-from course import views as v3
-from marks import views as v4
+from course import views as v2
+from marks import views as v3
+from attendance import views as v4
+
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', v1.landing, name='landing'),
     path('home/', v1.home, name='home'),
+    path('message/', v1.message, name='message'),
+
     path('student/', v1.student, name='student'),
+    path('student/student-resgistration/', v1.stu_reg, name='stu_reg'),
+    path('student/student-updation/', v1.stu_up, name='stu_up'),
+    path('student/student-deletion/', v1.stu_del, name='stu_del'),
+    path('student/student-profile/', v1.student, name='stu_pro'),
 
-    path('student/student-registration/', v1.stu_reg , name='stu_reg'),
-    path('student/updating-student-details/', v1.stu_up , name='stu_up'),
-    path('student/deleting-student-details/', v1.stu_del , name='stu_del'),
 
-    path('attendance/', v2.attendance, name='attendance'),  
-    path('course/', v3.course, name='course'),
-    path('marks/', v4.marks, name='marks'),
+    path('course/', v2.course , name='course'),
+    path('marks/', v3.marks, name='marks'),
+    path('attendance/', v4.attendance, name='attendance'),
+
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -10,17 +10,38 @@
   </head>
   <body>
     <center>
-      <h1>Login</h1>
-      <p>please login to continue</p>
+      <h1>Please login to continue</h1>
+      <h2>{{msg}}</h2>
       <form method="post" action="{% url 'landing' %}">
         {% csrf_token %}
-        <label for="uname">Username : </label>
-        <input type="text" id="uname" name="uname" required />
-        <br />
-        <label for="password">Password : </label>
-        <input type="password" id="password" name="password" required />
-        <br />
-        <input type="submit" />
+        <fieldset>
+          <legend>Login</legend>
+          <div id="grid">
+            <div class="col1"><label for="uname">Username : </label></div>
+            <div>
+              <input
+                class="col2"
+                type="text"
+                id="uname"
+                name="uname"
+                placeholder="Enter Username"
+                required
+              />
+            </div>
+            <div class="col1"><label for="password">Password : </label></div>
+            <div>
+              <input
+                class="col2"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter Password"
+                required
+              />
+            </div>
+          </div>
+          <input type="submit" />
+        </fieldset>
       </form>
     </center>
   </body>

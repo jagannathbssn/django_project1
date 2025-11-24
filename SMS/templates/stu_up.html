@@ -1,57 +1,468 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+  <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management System</title>
     <link rel="stylesheet" href="{% static 'css/stu_up.css' %}" />
-    <script src="{% static 'js/student.js' %}"></script>
+    <style>
+      body{
+        background-color: black;
+        color: white;
+      }
+    </style>
   </head>
   <body>
+    <h1>
+      {{obj}}
+    </h1>
     <center>
       <nav>
         <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'student' %}">Students</a>
+        <a href="{% url 'student' %}">Student</a>
         <a href="{% url 'course' %}">Course</a>
         <a href="{% url 'marks' %}">Marks</a>
         <a href="{% url 'attendance' %}">Attendance</a>
       </nav>
-      <h1>Updating Student Details</h1>
-      <div id="grid">
-        <div id="se_cls">
-          <label for="cls">Select Class : </label>
-          <select name="cls" id="cls" onchange="cls_sel()">
-            <option value=""></option>
-            {% for c in data %}
-            <option value="{{c.cls_name}}">{{c.cls_name}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div id="fo">
+
+      <h1>Student Updation</h1>
+      <label for="type"> Get the student by : </label>
+      <select id="type" required>
+        <option value="">Select option</option>
+        <option value="id">Student ID</option>
+        <option value="email">Student Email</option>
+        <option value="others">Others</option>
+      </select>
+
+      <fieldset>
+        <legend>Get student details</legend>
+        <div id="use_sid">
           <form action="{% url 'stu_up' %}" method="post">
             {% csrf_token %}
+            <label for="sid">Student ID : </label>
             <input
-              type="text"
-              name="cls"
-              id="clsname"
-              placeholder="Class name"
-              hidden
-              required
+            type="text"
+            name="sid"
+            id="sid"
+            placeholder="Please enter the student id"
+            required
             />
-            <label for="Roll">Roll Number :</label>
-            <input
-              type="number"
-              name="roll"
-              id="Roll"
-              placeholder="Roll"
-              required
-            />
-            <input type="submit" value="Get" />
+            <input type="submit" value="GET" />
           </form>
         </div>
+
+
+        <div id="use_email">
+          <form action="{% url 'stu_up' %}" method="post">
+            {% csrf_token %}
+            <label for="seid">Student Email : </label>
+            <input
+            type="text" 
+            name="seid"
+            id="seid"
+            placeholder="Please fill the student email"
+            required
+            />
+            <input type="submit" value="GET" />
+          </form>
+        </div>
+
+        <div id="others">
+          <form action="{% url 'stu_up' %}" method="post">
+            {% csrf_token %}
+            <label for="spro">Academic Program : </label>
+            <select name="spro" id="spro" required>
+              <option value="">Select Academic Program</option>
+                {% for i in prog_name %}
+                <option value="{{i.pname}}">{{i.pname}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="syear">Year : </label>
+            <select name="syear" id="syear" required>
+              <option value="">Select Year</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+
+            <label for="ssem">Semister : </label>
+            <select name="ssem" id="ssem" required>
+              <option value="">Select Semister</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+
+
+            <label for="scls">Class : </label>
+            <select name="scls" id="scls" required>
+              <option value="">Select Class</option>
+              {% for i in class_name %}
+              <option value="{{i.cls_name}}">{{i.cls_name}}</option>
+              {% endfor %}
+            </select>
+
+            <label for="sroll">Roll Number : </label>
+            <input 
+            type="text" 
+            id="sroll" 
+            name="sroll"  
+            placeholder="Please enter roll number" 
+            required />
+
+            <input type="submit" value="GET" />
+          </form>
+        </div>
+      </fieldset>
+
+      <div id="student_info">
+        <form action="{% url 'stu_up' %}" method="post"  enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset>
+            <legend>Student Details</legend>
+            <div id="grid">
+
+              <div class="col1"><label for="student_id">Student ID : </label></div>
+              <div class="col2">
+                <input
+                type="text"
+                id="student_id"
+                name="student_id"
+                value="{{sobj.sid}}"
+                readonly
+                />
+              </div>
+
+
+              <div class="col1"><label for="student_roll">Student Roll : </label></div>
+              <div class="col2">
+                <input
+                type="text"
+                id="student_roll"
+                value="{{sobj.roll}}"
+                readonly
+                />
+              </div>
+
+
+
+              <div class="col1"><label for="sname">Surname : </label></div>
+              <div class="col2">
+                <input
+                type="text"
+                id="sname"
+                name="ssname"
+                placeholder="Please enter first name"
+                value="{{sobj.sfname}}"
+                required
+                />
+              </div>
+
+            
+
+              <div class="col1"><label for="mname">Middle Name : </label></div>
+              <div class="col2">
+                <input
+                type="text"
+                id="mname"
+                name="smname"
+                value="{{sobj.smname}}"
+                placeholder="Please enter middle name"
+                />
+              </div>
+
+              <div class="col1"><label for="lname">Last Name : </label></div>
+              <div class="col2">
+                <input
+                type="text"
+                id="lname"
+                name="slname"
+                value="{{sobj.slname}}"
+                placeholder="Please enter first name"
+                required
+                />
+              </div>
+
+              <div class="col1">
+                <label for="fgname">Father’s / Guardian’s Name : </label>
+              </div>
+              <div class="col2">
+                <input
+                type="text"
+                id="fgname"
+                name="fgname"
+                value="{{sobj.gfname}}"
+                placeholder="Please enter father’s/guardian’s name"
+                required
+                />
+              </div>
+
+              <div class="col1">
+                <label for="nmname">Mother’s Name : </label>
+              </div>
+              <div class="col2">
+                <input
+                type="text"
+                id="nmname"
+                name="nmname"
+                value="{{sobj.mname}}"
+                placeholder="Please enter mother’s name"
+                />
+              </div>
+
+              <div class="col1">
+                <label for="dob">Date of Birth : </label>
+              </div>
+              <div class="col2">
+                <input
+                type="date"
+                id="dob"
+                name="dob"
+                value="{{sobj.dob|date:'Y-m-d'}}"
+                placeholder="Please enter student location"
+                required
+                />
+              </div>
+
+              <div class="col1">
+                <label for="gender">Gender : </label>
+             </div>
+            <div class="col2">
+                <input type="radio" name="gender" id="gender" value="Male" {% if sobj.gend == "Male" %}checked{% endif %}>Male
+                <input type="radio" name="gender" id="gender" value="Female" {% if sobj.gend == "Female" %}checked{% endif %}>Female
+            </div>
+            
+              <div class="col1">
+                <label for="gpno">Guardian’s Contact Number : </label>
+              </div>
+              <div class="col2">
+                <input
+                type="number"
+                id="gpno"
+                name="gpno"
+                value="{{sobj.gc_no}}"
+                placeholder="Please enter phone number"
+                required
+                />
+              </div>
+
+            
+              <div class="col1">
+                <label for="pno">Student Contact Number : </label>
+              </div>
+              <div class="col2">
+                <input
+                type="number"
+                id="pno"
+                name="cno"
+                value="{{sobj.ph_no}}"
+                placeholder="Please enter phone number"
+                required
+                />
+              </div>
+
+            
+              <div class="col1">
+                <label for="email">Student Email : </label>
+              </div>
+              <div class="col2">
+                <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{sobj.email}}"
+                placeholder="Please enter email address"
+                required
+                />
+              </div>
+
+
+              <div class="col1">
+                <label for="loca">Location : </label>
+              </div>
+              <div class="col2">
+                <input
+                type="text"
+                id="loca"
+                name="loca"
+                value="{{sobj.location}}"
+                placeholder="Please enter student location"
+                required
+                />
+              </div>
+              
+              <div class="col1">
+                <label for="status">Status : </label>
+              </div>
+              <div class="col2">
+                <select name="status" id="status" required>
+                  <option value="">Select Status</option>
+                  <option value="Active" {% if sobj.status == "Active" %}selected{% endif %}>Active</option>
+                  <option value="Inactive" {% if sobj.status == "Inactive" %}selected{% endif %}>Inactive</option>
+                  <option value="Discontinued" {% if sobj.status == "Discontinued" %}selected{% endif %}>Discontinued</option>
+                  <option value="Relieved" {% if sobj.status == "Relieved" %}selected{% endif %}>Relieved</option>
+                </select>
+              </div>
+
+              <div class="col1">
+                <label for="adr">Address : </label>
+              </div>
+              <div class="col2">
+                <textarea 
+                cols="30" 
+                rows="10" 
+                id="adr"
+                name="addr"
+                placeholder="Please enter address"
+                required>{{sobj.addr}}</textarea>
+              </div>
+
+              
+              <div class="col1">
+                <label for="prog">Academic Program  : </label>
+              </div>
+              <div class="col2">
+                <select
+                type="text"
+                id="prog"
+                name="prog"
+                required
+                >
+                <option value="">Select Academic Program</option>
+                {% for i in prog_name %}
+                <option 
+                value="{{i.pname}}"
+                {% if sobj.prog == i.pname %}
+                selected
+                {% endif %}>
+                  {{i.pname}}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+
+            <div class="col1"><label for="dur">Year : </label>
+            </div>
+            <div class="col2">
+              <select name="dura" id="dur" required>
+                <option value="">Select Year</option>
+                <option value="1" {% if sobj.year == 1 %}selected{% endif %}>1</option>
+                <option value="2" {% if sobj.year == 2 %}selected{% endif %}>2</option>
+                <option value="3" {% if sobj.year == 3 %}selected{% endif %}>3</option>
+                <option value="4" {% if sobj.year == 4 %}selected{% endif %}>4</option>
+                <option value="5" {% if sobj.year == 5 %}selected{% endif %}>5</option>
+              </select>
+            </div>
+
+          
+
+            <div class="col1">
+              <label for="sem">Semister : </label>
+            </div>
+            <div class="col2">
+              <select name="sem" id="sem" required>
+                <option value="">Select Semester</option>
+                <option value="1" {% if sobj.sem == 1 %}selected{% endif %}>1</option>
+                <option value="2" {% if sobj.sem == 2 %}selected{% endif %}>2</option>
+              </select>
+            </div>
+
+          
+            <div class="col1">
+              <label for="cl">Classs : </label>
+            </div>
+            <div class="col2">
+              <select
+              type="text"
+              id="cl"
+              name="cls"
+              required
+              >
+                <option value="">Select Class</option>
+                {% for i in class_name %}
+                <option 
+                value="{{i.cls_name}}"
+                {% if sobj.cls_name == i.cls_name%}
+                selected
+                {% endif %}>
+                  {{i.cls_name}}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+
+            <div class="col1">
+              <label for="photo">Student Photo :</label>
+
+            </div>
+            <div class="col2">
+              <input      
+              type="file"
+              id="photo"
+              name="photo"
+              accept="image/*"
+              />
+            </div>
+
+            <p>Previous Photo : </p>
+            {% if sobj.photo %}
+            <img 
+            src="{{ sobj.photo.url }}"
+            alt="Student Photo"
+            style="width:120px; height:120px; object-fit:cover; border:1px solid #ccc; margin-bottom:10px;">
+            {% endif %}
+
+            <p>New Photo : </p>
+            <img 
+            id="preview" 
+            style="display:none; width:150px; height:150px; object-fit:cover;" />
+            
+            
+            <input type="submit" value="Submit">
+            <input id="re" type="reset" value="Clear" onclick=clr()>
+          </fieldset>
+        </form>
       </div>
     </center>
   </body>
+  <script>
+    document.getElementById("use_sid").style.display = "none";
+    document.getElementById("use_email").style.display = "none";
+    document.getElementById("others").style.display = "none";
+
+    document.getElementById("type").addEventListener("change", () => {
+      let val = document.getElementById("type").value;
+
+      document.getElementById("use_sid").style.display = "none";
+      document.getElementById("use_email").style.display = "none";
+      document.getElementById("others").style.display = "none";
+
+
+      if (val === "id") {
+        document.getElementById("use_sid").style.display = "block";
+      } else if (val === "email") {
+        document.getElementById("use_email").style.display = "block";
+      } else if (val === "others") {
+        document.getElementById("others").style.display = "block";
+      }
+    });
+
+    function clr(){
+      const url = "/student/student-updation/";
+      window.location.href = url;
+    }
+
+
+    document.getElementById("photo").addEventListener("change", function(e) {
+    let img = document.getElementById("preview");
+    img.src = URL.createObjectURL(e.target.files[0]);
+    img.style.display = "block";
+    });
+  </script>
 </html>
