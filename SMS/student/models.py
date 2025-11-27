@@ -47,3 +47,4 @@ class Del_users(models.Model):
     sid = models.CharField(max_length=200, null=False, unique=True)
     details = models.TextField(null=False)
     time = models.DateTimeField(null=False)
+    

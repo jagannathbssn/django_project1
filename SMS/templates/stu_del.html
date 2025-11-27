@@ -23,8 +23,180 @@
         <a href="{% url 'marks' %}">Marks</a>
         <a href="{% url 'attendance' %}">Attendance</a>
       </nav>
-      <h1>Welcome,</h1>
-      <h2>to Student Management System</h2>
+      <h1>Student Deletion</h1>
+      <fieldset>
+        <legend>Get Student</legend>
+
+        <label for="type"> Get the student by : </label>
+        <select id="type" required>
+          <option value="">Select option</option>
+          <option value="id">Student ID</option>
+          <option value="email">Student Email</option>
+          <option value="others">Others</option>
+        </select>
+
+        <div id="use_sid">
+          <form action="{% url 'stu_del' %}" method="post">
+            {% csrf_token %}
+            <label for="sid">Student Id : </label>
+            <input
+              type="text"
+              name="sid"
+              id="sid"
+              placeholder="Enter student id"
+              required
+            />
+            <input type="submit" value="GET" />
+          </form>
+        </div>
+
+        <div id="use_email">
+          <form action="{% url 'stu_del' %}" method="post">
+            {% csrf_token %}
+            <label for="semid">Student Email ID : </label>
+            <input
+              type="text"
+              name="semid"
+              id="semid"
+              placeholder="Enter student email id "
+            />
+            <input type="submit" value="GET" />
+          </form>
+        </div>
+
+        <div id="others">
+          <form action="{% url 'stu_del' %}" method="post">
+            {% csrf_token %}
+            <label for="oprog">Academic Program : </label>
+            <select name="oprog" id="oprog" required>
+              <option value="">please select the prog</option>
+              {% for i in prog_name %}
+              <option value="{{i.pname}}">{{i.pname}}</option>
+              {% endfor %}
+            </select>
+
+            <label for="oyear">Year : </label>
+            <select name="oyear" id="oyear">
+              <option value="">please select year</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+
+            <label for="osem">Semister : </label>
+            <select name="osem" id="osem">
+              <option value="">please select Sem</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+
+            <label for="oclass">Class : </label>
+            <select name="oclass" id="oclass">
+              <option value="">please select class</option>
+              {% for i in class_name%}
+              <option value="{{i.cls_name}}">{{i.cls_name}}</option>
+              {% endfor %}
+            </select>
+
+            <label for="oroll">Roll : </label>
+            <input
+              type="text"
+              id="oroll"
+              name="oroll"
+              placeholder="enter roll number"
+              required
+            />
+
+            <input type="submit" value="GET" />
+          </form>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Details</legend>
+
+        <label for="student_id"> Student ID : </label>
+        <input type="text" id="student_id" value="{{sobj.sid}}" readonly />
+        <br />
+
+        <label for="fname">First name : </label>
+        <input type="text" id="fname" value="{{sobj.sfname}}" readonly />
+        <br />
+
+        <label for="mname">Middle name : </label>
+        <input type="text" id="mname" value="{{sobj.smname}}" readonly />
+        <br />
+
+        <label for="lname">Last name : </label>
+        <input type="text" id="lname" value="{{sobj.slname}}" readonly />
+        <br />
+
+        <label for="cno">Phone Number : </label>
+        <input type="text" id="cno" value="{{sobj.ph_no}}" readonly />
+        <br />
+
+        <label for="email">Email : </label>
+        <input type="text" id="email" value="{{sobj.email}}" readonly />
+        <br />
+
+        <label for="program">Academic Program : </label>
+        <input type="text" id="program" value="{{sobj.prog}}" readonly />
+        <br />
+
+        <label for="syear">Year : </label>
+        <input type="text" id="syear" value="{{sobj.year}}" readonly />
+        <br />
+
+        <label for="class">Class : </label>
+        <input type="text" id="class" value="{{sobj.cls_name}}" readonly />
+        <br />
+
+        <label for="sem">Semister : </label>
+        <input type="text" id="sem" value="{{sobj.sem}}" readonly />
+        <br />
+
+        <label for="roll">Roll number : </label>
+        <input type="text" id="roll" value="{{sobj.sem}}" readonly />
+        <br />
+
+        <label for="stat">Status : </label>
+        <input type="text" id="stat" value="{{sobj.status}}" readonly />
+        <br />
+
+        <h2 id="message"></h2>
+
+        <form action="{% url 'stu_del' %}" method="post">
+          {% csrf_token %}
+          <input type="text" name="dsid" value="{{sobj.sid}}" hidden required />
+          <input type="submit" value="Delete" onmouseenter="func()" />
+        </form>
+      </fieldset>
     </center>
+    <script>
+      document.getElementById("use_sid").style.display = "none";
+      document.getElementById("use_email").style.display = "none";
+      document.getElementById("others").style.display = "none";
+
+      document.getElementById("type").addEventListener("change", () => {
+        document.getElementById("use_sid").style.display = "none";
+        document.getElementById("use_email").style.display = "none";
+        document.getElementById("others").style.display = "none";
+
+        if (document.getElementById("type").value == "id") {
+          document.getElementById("use_sid").style.display = "block";
+        } else if (document.getElementById("type").value == "email") {
+          document.getElementById("use_email").style.display = "block";
+        } else if (document.getElementById("type").value == "others") {
+          document.getElementById("others").style.display = "block";
+        }
+      });
+
+      function func() {
+        document.getElementById("message").innerHTML =
+          "Please check the student details will be lost";
+      }
+    </script>
   </body>
 </html>

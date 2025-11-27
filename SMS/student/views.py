@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
+from django.forms.models import model_to_dict
 from student.models import Cred
 from student.models import Student as Stu
+from student.models import Del_users as De
 from course.models import Prog
 from datetime import date as d
+import datetime as dt
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 def landing(request):
@@ -224,4 +229,73 @@ def stu_up(request):
         return render(request, "stu_up.html", data)
     
 def stu_del(request):
-    return render(request, 'stu_del.html')
+    data = {}
+    prog_name = Prog.objects.values("pname")
+    data["prog_name"] = prog_name
+    class_name = Stu.objects.values("cls_name").distinct()
+    data["class_name"] = class_name
+
+    if request.method == "POST":
+        if request.POST.get('dsid'):
+            sid = request.POST.get('dsid')
+            try:
+                re = Stu.objects.get(sid = sid)
+                te = model_to_dict(re)
+                if re.photo:
+                    te['photo'] = re.photo.url
+                else:
+                    te['photo'] = None
+                js = json.dumps(te, cls = DjangoJSONEncoder)
+                De.objects.create(
+                    sid = sid,
+                    details = js,
+                    time = dt.datetime.now()
+                )
+                re.delete()
+                data["msg1"] = "Deleting student details is sucessful"
+                data["val" ] = 1
+                data["msg2"] = "Please click the button below to return to the previous page."
+                data["modu"] = "stu_del"
+            except Exception as e:
+                data["msg1"] = "Deleting student details is not sucessful, Please check the details"
+                data["val" ] = 0
+                data["msg2"] = "Please click the button below to return to the previous page."
+                data["modu"] = "stu_del"
+                data["err" ] = e
+            return render(request, 'message.html', data)
+
+        else:
+            try:
+                if request.POST.get('sid'):
+                    sid = request.POST.get('sid')
+                    sobj = Stu.objects.get(sid = sid)
+                    data['sobj'] = sobj
+                elif request.POST.get('semid'):
+                    email = request.POST.get('semid')
+                    sobj = Stu.objects.get(email = email)
+                    data['sobj'] = sobj
+                else:
+                    pro = request.POST.get('oprog')
+                    year = request.POST.get('oyear')
+                    sem = request.POST.get('osem')
+                    cls = request.POST.get('oclass')
+                    roll = request.POST.get('oroll')
+
+                    sobj = Stu.objects.get(
+                        prog = pro,
+                        year = year,
+                        sem = sem,
+                        cls_name = cls,
+                        roll = roll
+                    )
+                    data['sobj'] = sobj
+                return render(request, 'stu_del.html', data)
+            except Exception as e:
+                data["msg1"] = "Please check the details, No studets are aviailable"
+                data["val" ] = 0
+                data["msg2"] = "Please click the button below to return to the previous page."
+                data["modu"] = "stu_del"
+                data["err" ] = e
+                return render(request, 'message.html', data)
+    else:
+        return render(request, 'stu_del.html', data)

@@ -6,8 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management System</title>
-    <script src="{% static 'js/course.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/course.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/cor_add_pro.css' %}" />
     <style>
       body {
         background-color: black;
@@ -24,16 +23,8 @@
         <a href="{% url 'marks' %}">Marks</a>
         <a href="{% url 'attendance' %}">Attendance</a>
       </nav>
-      <h1>Course operations</h1>
-      <div id="options">
-        <button class="but" onclick="anp()">Add New Program</button><br />
-        <button class="but" onclick="anc()">Add New Course</button><br />
-        <button class="but" onclick="dp()">Delete a Porg</button><br />
-        <button class="but" onclick="dc()">Delete a Course</button><br />
-        <button class="but" onclick="acs()">
-          Assign the course to students</button
-        ><br />
-      </div>
+      <h1>Welcome,</h1>
+      <h2>to Student Management System</h2>
     </center>
   </body>
 </html>

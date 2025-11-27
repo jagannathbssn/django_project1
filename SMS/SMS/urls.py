@@ -42,6 +42,12 @@ urlpatterns = [
 
 
     path('course/', v2.course , name='course'),
+    path('course/add-new-program', v2.cor_add_pro, name='cor_add_pro'),
+    path('course/add-new-course', v2.cor_add, name="cor_add"),
+    path('course/delete-program', v2.cor_del_pro, name='cor_del_pro'),
+    path('course/delete-course', v2.cor_del, name='cor_del'),
+    path('course/add-course-to-students', v2.acs, name='acs'),
+
     path('marks/', v3.marks, name='marks'),
     path('attendance/', v4.attendance, name='attendance'),
 
