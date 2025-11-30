@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="{% static 'css/cor_add_pro.css' %}" />
+    <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'student' %}">Students</a>
+        <a href="{% url 'course' %}">Course</a>
+        <a href="{% url 'marks' %}">Marks</a>
+        <a href="{% url 'attendance' %}">Attendance</a>
+      </nav>
+
+      <h1>Deleting Academic Program</h1>
+
+      <fieldset>
+        <legend>Get Program</legend>
+        <div>
+          <label for="get"> Get program by </label>
+          <select name="get" id="get" required>
+            <option value="">Select an option</option>
+            <option value="pid">Program ID</option>
+            <option value="pname">Prgram Name</option>
+          </select>
+        </div>
+        <div id="pid">
+          <form action="{% url 'cor_del_pro' %}" method="post">
+            {% csrf_token %}
+            <label for="gpid">Program ID : </label>
+            <input
+              type="text"
+              name="gpid"
+              id="gpid"
+              placeholder="enter the program id"
+              required
+            />
+            <input type="submit" value="GET" />
+          </form>
+        </div>
+        <div id="pname">
+          <form action="{% url 'cor_del_pro' %}" method="post">
+            {% csrf_token %}
+            <label for="gpname">Program Name : </label>
+            <input
+              id="gpname"
+              name="gpname"
+              type="text"
+              placeholder="enter the program name"
+              required
+            />
+            <input type="submit" value="GET" />
+          </form>
+        </div>
+      </fieldset>
+      <br />
+
+      <fieldset id="detai">
+        <legend>Program Details</legend>
+        <form action="{% url 'cor_del_pro' %}" method="post">
+          {% csrf_token %}
+
+          <label for="pro_id">Program ID : </label>
+          <input
+            type="text"
+            name="pro_id"
+            id="pro_id"
+            value="{{obj.pid}}"
+            readonly
+          />
+          <br />
+
+          <label for="pro_name"> Academic Program Name : </label>
+          <input
+            type="text"
+            name="pro_name"
+            id="pro_name"
+            value="{{obj.pname}}"
+            readonly
+          />
+          <br />
+
+          <label for="pro_dur">Program Duration (in years): </label>
+          <input
+            type="text"
+            name="pro_dur"
+            id="pro_dur"
+            value="{{obj.dur}}"
+            readonly
+          />
+          <br />
+
+          <label for="prog_desc">Program Description : </label><br />
+          <input
+            type="text"
+            name="prog_desc"
+            id="prog_desc"
+            value="{{obj.pdesc}}"
+            readonly
+          />
+          <br />
+
+          <input type="submit" value="Submit" />
+          <input type="reset" value="Clear" />
+        </form>
+      </fieldset>
+    </center>
+    <script src="{% static 'js/cor_del_pro.js' %}"></script>
+  </body>
+</html>
